@@ -3,13 +3,24 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   # respond_to :html, :json 
 
-
-
   def buy
-    
-    @weed_count = User.all
-    @user_count = @users.count
-    render :json => @weed_count
+    @requested_category_count = Inventory.where({category: params[:category]}).count
+    if @requested_category_count < 20
+      @inventory = Inventory.create({category: params[:category]})
+      render :json => {message: "Successful POST", success: true, whatToUpdate: params[:category]}
+    else
+      render :json => {message: "Unsuccessful POST. Sold Out", success: false}
+    end
+  end
+
+  def sell
+    @requested_category_count = Inventory.where({category: params[:category]}).count
+    if @requested_category_count > 0
+      Inventory.last.destroy 
+      render :json => {message: "Successful DELETE", success: true, whatToSell: params[:category]}
+    else
+      render :json => {message: "Unsuccessful DELETE", success: false}
+    end
   end
 
   # GET /users

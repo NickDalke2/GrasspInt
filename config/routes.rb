@@ -5,7 +5,11 @@ Rails.application.routes.draw do
   get 'welcome/index' 
 
   delete 'logout' => 'user_sessions#destroy', as: :logout 
-  get '/buy' => "users#buy", as: :buy
+  get '/buy-weed' => "users#buy_weed", as: :buy
+  post '/buy' => 'users#buy'
+
+  delete '/sell' => 'users#sell' 
+  
   resources :users
   resources :user_sessions, only: [:new, :create]
   # The priority is based upon order of creation: first created -> highest priority.

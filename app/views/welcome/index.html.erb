@@ -18,18 +18,19 @@
 	<div id="Labels">
 
 		<div id="DinosLabel"> 
-			<h3> Dinos </h3> 
-			<%= link_to 'Buy One' %>
+			<h3 class="cat-title" data-category="dinos"> Dinos </h3> 
+			<!-- <%= link_to 'Buy One' %> -->
+			<a href="#" class="buy" data-category="dinos">Buy One</a>
 		</div>
 
 		<div id="WeedLabel">
-			<h3> Weed </h3>
-			<a href="#" id="buybtn">Buy One</a>
+			<h3 class="cat-title" data-category="weed"> Weed </h3>
+			<a href="#" class="buy" data-category="weed">Buy One</a>
 		</div>
 
 		<div id="BakedDinosLabel"> 
-			<h3> Baked Dinos </h3> 
-			<%= link_to 'Buy One' %>
+			<h3 class="cat-title" data-category="bakeddinos"> Baked Dinos </h3> 
+			<a href="#" class="buy" data-category="bakeddinos">Buy One</a>
 		</div>
 
 	</div> 
@@ -59,18 +60,18 @@
   <tbody>
   <tr>
      <td>Dinos</td>
-     <td> <%= %> </td>
-     <td> <%= submit_tag 'Sell One' %>
+     <td id="dinos"> <%= @dino_count %> </td>
+     <td> <a href="#" class="sell" data-category="dinos">Sell One</a> </td>
   </tr>
   <tr>
       <td>Weed</td>
-      <td id="weedCount"> <%= %> </td> 
-      <td> <%= submit_tag 'Sell One' %> 
+      <td id="weed"> <%= @weed_count %> </td> 
+      <td> <a href="#" class="sell" data-category="weed">Sell One</a> </td>
   </tr>
    <tr>
       <td>Baked Dinos</td>
-      <td> <%= %> </td>
-      <td> <%= submit_tag 'Sell One' %>
+      <td id="bakeddinos"> <%= @baked_dino_count %> </td>
+      <td> <a href="#" class="sell" data-category="bakeddinos">Sell One</a> </td>
   </tr>
   </tbody>
 </table>
@@ -83,17 +84,95 @@
 
 
 <script>
-	jQuery('#buybtn').click(function(evt){ 
-		evt.preventDefault();
-			$.ajax({
-				url: '/buy',
-				//method: 'GET',
-				success: function(data) {
-					console.log(data)
-					$('#weedCount').text(data)
-				}
-			})
-			
-		// console.log('clicked!')
+	var inventory = {
+		'dinos': {
+			'name': 'Dinos',
+			'count': <%= @dino_count %>
+		},
+		'weed': {
+			'name': 'Weed',
+			'count': <%= @weed_count %>
+		},
+		'bakeddinos': {
+			'name': 'Baked Dinos',
+			'count': <%= @baked_dino_count %>
+		}
+	}
+
+	$('h3.cat-title').each(function(index,el){
+		console.log(inventory[$(el).data('category')])
+		if(parseInt(inventory[$(el).data('category')]) >= 20) {
+			el.innerText = '(SOLD OUT)'
+		}
 	})
+	/*$('#buybtn').click(function(evt){ 
+		evt.preventDefault();
+		$.ajax({
+			url: '/buy-weed',
+			//method: 'GET',
+			success: function(data) {
+				console.log(data)
+				var whatToUpdate = data.whatToUpdate
+				weedCount = data
+				$('#weedCount').text(weedCount)
+			}
+		})
+	})
+
+	$('#buyDino').click(function(evt){
+		evt.preventDefault()
+		$.ajax({
+			method: 'POST',
+			url: '/buy',
+			data: {category: 'bakeddinos'},
+			success: function(data){
+				console.log(data)
+			}
+		})
+	})*/
+
+	$('.buy').click(function(evt){
+		evt.preventDefault()
+		var whatToBuy = $(this).data('category')
+		$.ajax({
+			method: 'POST',
+			url: '/buy',
+			data: {category: whatToBuy},
+			success: function(data){
+				if(data.success){
+					// $('#' + data.whatToUpdate).text(parseInt($('#' + data.whatToUpdate).text()) + 1)
+					inventory[data.whatToUpdate]['count'] += 1
+					$('#' + data.whatToUpdate).text(inventory[data.whatToUpdate]['count'])
+				} else {
+					
+					$('h3[data-category=' + whatToBuy + ']').text('(SOLD OUT)')
+				}
+
+			}
+		})
+	})
+
+	$('.sell').click(function(evt){
+		evt.preventDefault()
+		var whatToSell = $(this).data('category')
+		$.ajax({
+			method: 'DELETE',
+			url: '/sell',
+			data: {category: whatToSell},
+			success: function(data){
+				if(data.success){
+					// $('#' + data.whatToSell).text(parseInt($('#' + data.whatToSell).text()) - 1)
+					inventory[data.whatToSell]['count'] -= 1
+					$('#' + data.whatToSell).text(inventory[data.whatToSell]['count'])
+					$('h3[data-category=' + whatToSell + ']').text(inventory[whatToSell]['name'])
+					console.log(data)
+				} else {
+					// $('h3[data-category=' + whatToSell + ']').text('(SOLD OUT)')
+				}
+
+			}
+		})
+	})
+
+
 </script>
