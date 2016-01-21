@@ -1,6 +1,16 @@
 class UsersController < ApplicationController
   before_action :require_user, only: [:index, :show] 
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+  # respond_to :html, :json 
+
+
+
+  def buy
+    
+    @weed_count = User.all
+    @user_count = @users.count
+    render :json => @weed_count
+  end
 
   # GET /users
   # GET /users.json

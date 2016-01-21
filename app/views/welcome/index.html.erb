@@ -1,22 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Homesite</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+
 
 
 
 <div id="storefront">
 	<h1> Storefront </h1>
 
-		<div id="Dino">
+		<div id="Dino"> 
 		</div>
 
 		<div id="Weed">
+
 		</div>
 
 		<div id="WeedDino">
@@ -24,16 +17,19 @@
 
 	<div id="Labels">
 
-		<div id="DinosLabel">
-			<h3> Dinos </h3>
+		<div id="DinosLabel"> 
+			<h3> Dinos </h3> 
+			<%= link_to 'Buy One' %>
 		</div>
 
 		<div id="WeedLabel">
 			<h3> Weed </h3>
+			<a href="#" id="buybtn">Buy One</a>
 		</div>
 
 		<div id="BakedDinosLabel"> 
-			<h3> Baked Dinos </h3>
+			<h3> Baked Dinos </h3> 
+			<%= link_to 'Buy One' %>
 		</div>
 
 	</div> 
@@ -53,20 +49,51 @@
 	<br/> 
 	<br/> 
 
- <tbody>
-    <% @user.inventories.each do |u| %>
-      <tr>
-        <td><%= u.name %></td>
-        <td><%= u.quantity %></td>
-      </tr>
-    <% end %>
+<table align="center">
+  <thead>
+  <tr>
+     <th>Product</th>
+     <th>Quantity</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+     <td>Dinos</td>
+     <td> <%= %> </td>
+     <td> <%= submit_tag 'Sell One' %>
+  </tr>
+  <tr>
+      <td>Weed</td>
+      <td id="weedCount"> <%= %> </td> 
+      <td> <%= submit_tag 'Sell One' %> 
+  </tr>
+   <tr>
+      <td>Baked Dinos</td>
+      <td> <%= %> </td>
+      <td> <%= submit_tag 'Sell One' %>
+  </tr>
   </tbody>
 </table>
-
+<!-- @user.inventories.dinos  -->  
 
 
 
 </div>
+</div>
 
-</body>
-</html>
+
+<script>
+	jQuery('#buybtn').click(function(evt){ 
+		evt.preventDefault();
+			$.ajax({
+				url: '/buy',
+				//method: 'GET',
+				success: function(data) {
+					console.log(data)
+					$('#weedCount').text(data)
+				}
+			})
+			
+		// console.log('clicked!')
+	})
+</script>
