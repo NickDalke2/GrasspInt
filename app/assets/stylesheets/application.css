@@ -1,0 +1,86 @@
+html, body { 
+	height: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;  
+	background-size: cover;
+	font-family: "TroglodyteNF";
+}
+
+#storefront {
+	text-align: center;
+	height: 50%;
+	width: 100%;
+	border: 7px dashed rgba(255, 222, 255, 1); 
+}
+
+h2 {
+	float: left;
+}
+
+#Dino {
+  float: left;
+  padding-top: 0px;
+/*  border: 7px dashed rgba(255, 0, 255, 0.8);
+*/  width: 30%;
+  height: 50%;
+  background-image: url(images.jpg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+#Weed {
+  display: inline-block;
+  margin: 0 auto;
+  width: 100px;
+/*  border: 7px dashed rgba(255, 0, 255, 0.8);
+*/  width: 30%;
+  height: 50%;
+  background-image: url(marijuana-reviewer.jpg);
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+
+#WeedDino {
+  float: right;
+  padding-top: 0px;
+/*  border: 7px dashed rgba(255, 0, 255, 0.8);
+*/  width: 30%;
+  height: 50%;
+  background-image: url(T-rex-dinosaur-clip-art-T-Rex-Dinosaur_1.png);
+  background-size: 300px;
+  background-repeat: no-repeat;
+}
+
+#Labels {
+	width: 100%;
+	border: 7px dashed rgba(255, 0, 255, 0.8);
+}
+
+#DinosLabel {
+	float: left;
+	width: 30%;
+	/*border: 7px dashed rgba(255, 0, 255, 0.8);*/
+}
+
+#WeedLabel {
+	display: inline-block;
+	margin: 0 auto;
+	width: 30%;
+	/*border: 7px dashed rgba(255, 0, 255, 0.8);*/
+}
+
+#BakedDinosLabel{
+	float: right;
+	width: 30%;
+	/*border: 7px dashed rgba(255, 0, 255, 0.8);*/
+}
+
+#UserData{
+	text-align: center;
+	border: 7px dashed rgba(0, 255, 255, 0.8);
+	padding-top: -30px;
+	height: 50%;
+	width: 100%;
+}
+

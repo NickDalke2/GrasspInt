@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Homesite</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+
+
+
+<div id="storefront">
+	<h1> Storefront </h1>
+
+		<div id="Dino">
+		</div>
+
+		<div id="Weed">
+		</div>
+
+		<div id="WeedDino">
+		</div>
+
+	<div id="Labels">
+
+		<div id="DinosLabel">
+			<h3> Dinos </h3>
+		</div>
+
+		<div id="WeedLabel">
+			<h3> Weed </h3>
+		</div>
+
+		<div id="BakedDinosLabel"> 
+			<h3> Baked Dinos </h3>
+		</div>
+
+	</div> 
+
+</div>
+
+<div id="UserData">
+	<h1> Your Collection </h1>
+
+<% if current_user %>
+  Logged in as: <%= current_user.name %> <%= link_to 'Log Out', logout_path, method: :delete %> <%= link_to 'Edit', edit_user_path(@user) %>
+<% else %>
+  <%= link_to 'Log In', login_path %>
+  <%= link_to 'Sign Up', new_user_path %>
+<% end %>
+	
+	<br/> 
+	<br/> 
+
+ <tbody>
+    <% @user.inventories.each do |u| %>
+      <tr>
+        <td><%= u.name %></td>
+        <td><%= u.quantity %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+
+</div>
+
+</body>
+</html>
